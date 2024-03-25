@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AccountCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Accounts>
+		<Account>
+			<CompanyId>81072259B33D429F9E91898779220E46</CompanyId>
+			<ContactId>CBBA373A80984A8696769CEF3D080BF7</ContactId>
+			<UserId>5DDC741CC769447BAA2C58ACFF2D3820</UserId>
+			<Username>TestClient_NotSeeingStaffCompany.2608@onvio.com</Username>
+			<Password>TRe2e1234_</Password>
+			<Environment>DEMO</Environment>
+		</Account>
+		<Account>
+			<CompanyId>BBD304E9FFEE4345AC9FEDADD53FC488</CompanyId>
+			<ContactId>D0D17EA09E6E426CBDFD9F70DC190A96</ContactId>
+			<UserId>22901D1A01594A9DA3DE553D41750971</UserId>
+			<Username>fernanda1queiroz44+fqfdemo01@gmail.com</Username>
+			<Password>Fernanda=2024</Password>
+			<Environment>DEMO</Environment>
+		</Account>
+	</Accounts>
+</AccountCollection>

@@ -1,0 +1,314 @@
+﻿<Window
+    x:Class="LoginApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:LoginApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Login App"
+    Width="600"
+    Height="400"
+    ResizeMode="CanMinimize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <local:ItemToBoolConverter x:Key="ItemToBoolConverter" />
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  COMBOBOX ACCOUNTS  -->
+        <Grid Height="25" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ComboBox
+                x:Name="cbAccounts"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center"
+                SelectionChanged="CbAccounts_SelectionChanged" />
+            <Button
+                x:Name="btnAddSavedAccount"
+                Grid.Column="1"
+                MinWidth="30"
+                Margin="5,0"
+                Padding="-1"
+                VerticalContentAlignment="Top"
+                Click="BtnAddSavedAccount_Click"
+                Content="+"
+                FontSize="16"
+                FontWeight="Bold" />
+            <Button
+                x:Name="btnRemoveSavedAccount"
+                Grid.Column="2"
+                Width="30"
+                MinWidth="30"
+                Padding="-1"
+                HorizontalAlignment="Right"
+                VerticalContentAlignment="Top"
+                Click="BtnRemoveSavedAccount_Click"
+                Content="-"
+                FontSize="16"
+                FontWeight="Bold"
+                IsEnabled="{Binding AccountSelected}" />
+        </Grid>
+
+        <!--  COMBOBOX ENDPOINT AND ENVIRONMENT  -->
+        <Grid
+            Grid.Row="1"
+            Height="25"
+            Margin="0,0,0,5"
+            HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox
+                x:Name="cbServiceType"
+                MinWidth="300"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center">
+                <ComboBoxItem
+                    Content="InternalCompanyMapping /v1/sessions"
+                    IsSelected="True"
+                    Tag="ICM" />
+                <ComboBoxItem Content="InternalSecurityServices /v3/sessions" Tag="ISS" />
+                <ComboBoxItem Content="SecurityServices /v2/sessions" Tag="SS" />
+            </ComboBox>
+            <ComboBox
+                x:Name="cbEnv"
+                Grid.Column="1"
+                Margin="5,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center">
+                <ComboBoxItem Content="CI" />
+                <ComboBoxItem Content="DEMO" IsSelected="True" />
+                <ComboBoxItem Content="QED" />
+                <ComboBoxItem Content="PROD" />
+            </ComboBox>
+        </Grid>
+
+        <!--  GRID COMPANY ID  -->
+        <Grid Grid.Row="2" Margin="0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="70" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                IsEnabled="{Binding ElementName=txtCompanyId, Path=IsEnabled}"
+                Text="Company Id: "
+                TextWrapping="Wrap" />
+            <TextBox
+                x:Name="txtCompanyId"
+                Grid.Column="1"
+                Height="25"
+                VerticalAlignment="Top"
+                VerticalContentAlignment="Center"
+                Tag="COMPANY_ID"
+                TextWrapping="Wrap">
+                <TextBox.IsEnabled>
+                    <MultiBinding Converter="{StaticResource ItemToBoolConverter}">
+                        <Binding Path="IsAddingOrEditing" />
+                        <Binding ElementName="cbServiceType" Path="SelectedItem.Tag" />
+                        <Binding Path="Tag" RelativeSource="{RelativeSource Self}" />
+                    </MultiBinding>
+                </TextBox.IsEnabled>
+            </TextBox>
+        </Grid>
+
+        <!--  GRID CONTACT ID  -->
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="70" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                IsEnabled="{Binding ElementName=txtContactId, Path=IsEnabled}"
+                Text="Contact Id: "
+                TextWrapping="Wrap" />
+            <TextBox
+                x:Name="txtContactId"
+                Grid.Column="1"
+                Height="25"
+                VerticalAlignment="Top"
+                VerticalContentAlignment="Center"
+                Tag="CONTACT_ID"
+                TextWrapping="Wrap">
+                <TextBox.IsEnabled>
+                    <MultiBinding Converter="{StaticResource ItemToBoolConverter}">
+                        <Binding Path="IsAddingOrEditing" />
+                        <Binding ElementName="cbServiceType" Path="SelectedItem.Tag" />
+                        <Binding Path="Tag" RelativeSource="{RelativeSource Self}" />
+                    </MultiBinding>
+                </TextBox.IsEnabled>
+            </TextBox>
+        </Grid>
+
+        <!--  GRID USER ID  -->
+        <Grid Grid.Row="4" Margin="0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="70" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                IsEnabled="{Binding ElementName=txtUserId, Path=IsEnabled}"
+                Text="User Id: "
+                TextWrapping="Wrap" />
+            <TextBox
+                x:Name="txtUserId"
+                Grid.Column="1"
+                Height="25"
+                VerticalAlignment="Top"
+                VerticalContentAlignment="Center"
+                Tag="USER_ID"
+                TextWrapping="Wrap">
+                <TextBox.IsEnabled>
+                    <MultiBinding Converter="{StaticResource ItemToBoolConverter}">
+                        <Binding Path="IsAddingOrEditing" />
+                        <Binding ElementName="cbServiceType" Path="SelectedItem.Tag" />
+                        <Binding Path="Tag" RelativeSource="{RelativeSource Self}" />
+                    </MultiBinding>
+                </TextBox.IsEnabled>
+            </TextBox>
+        </Grid>
+
+        <!--  GRID USERNAME  -->
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="70" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                IsEnabled="{Binding ElementName=txtUsername, Path=IsEnabled}"
+                Text="Username: "
+                TextWrapping="Wrap" />
+            <TextBox
+                x:Name="txtUsername"
+                Grid.Column="1"
+                Height="25"
+                VerticalAlignment="Top"
+                VerticalContentAlignment="Center"
+                Tag="USERNAME"
+                TextWrapping="Wrap">
+                <TextBox.IsEnabled>
+                    <MultiBinding Converter="{StaticResource ItemToBoolConverter}">
+                        <Binding Path="IsAddingOrEditing" />
+                        <Binding ElementName="cbServiceType" Path="SelectedItem.Tag" />
+                        <Binding Path="Tag" RelativeSource="{RelativeSource Self}" />
+                    </MultiBinding>
+                </TextBox.IsEnabled>
+            </TextBox>
+        </Grid>
+
+        <!--  GRID PASSWORD  -->
+        <Grid Grid.Row="6" Margin="0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="70" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                IsEnabled="{Binding ElementName=txtPassword, Path=IsEnabled}"
+                Text="Senha: "
+                TextWrapping="Wrap" />
+            <TextBox
+                x:Name="txtPassword"
+                Grid.Column="1"
+                Height="25"
+                VerticalAlignment="Top"
+                VerticalContentAlignment="Center"
+                Tag="PASSWORD"
+                TextWrapping="Wrap">
+                <TextBox.IsEnabled>
+                    <MultiBinding Converter="{StaticResource ItemToBoolConverter}">
+                        <Binding Path="IsAddingOrEditing" />
+                        <Binding ElementName="cbServiceType" Path="SelectedItem.Tag" />
+                        <Binding Path="Tag" RelativeSource="{RelativeSource Self}" />
+                    </MultiBinding>
+                </TextBox.IsEnabled>
+            </TextBox>
+        </Grid>
+
+        <!--  GRID SAVE BUTTON  -->
+        <Grid
+            Grid.Row="8"
+            Margin="0,5"
+            VerticalAlignment="Bottom">
+            <Button
+                x:Name="btnSaveAccount"
+                Height="30"
+                MinWidth="150"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Click="BtnSaveAccount_Click"
+                Content="Salvar Conta" />
+        </Grid>
+
+        <!--  GRID GENERATE BUTTON  -->
+        <Grid
+            Grid.Row="9"
+            Margin="0,5"
+            VerticalAlignment="Bottom">
+            <Button
+                x:Name="btnGenerate"
+                Height="30"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                Click="BtnGenerate_Click"
+                Content="Gerar e Copiar" />
+        </Grid>
+
+        <!--  GRID RESULT  -->
+        <Grid Grid.Row="10" Margin="0,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Text="Token: "
+                TextWrapping="Wrap" />
+            <TextBox
+                x:Name="txtToken"
+                Grid.Column="1"
+                Height="25"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                VerticalContentAlignment="Center"
+                IsReadOnly="True"
+                PreviewMouseDown="TxtToken_PreviewMouseDown"
+                TextWrapping="Wrap" />
+
+        </Grid>
+
+    </Grid>
+</Window>
